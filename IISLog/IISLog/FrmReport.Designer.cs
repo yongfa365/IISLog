@@ -29,7 +29,9 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbxGroupByType = new System.Windows.Forms.ComboBox();
             this.btnGroupByFileMinutes = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.numTimes = new System.Windows.Forms.NumericUpDown();
             this.txtLogFolder = new System.Windows.Forms.TextBox();
@@ -38,8 +40,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.txtURL = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbxGroupByType = new System.Windows.Forms.ComboBox();
+            this.chkSum = new System.Windows.Forms.CheckBox();
+            this.chkAvg = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimes)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -61,6 +63,19 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "NO.1";
             // 
+            // cbxGroupByType
+            // 
+            this.cbxGroupByType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxGroupByType.FormattingEnabled = true;
+            this.cbxGroupByType.Items.AddRange(new object[] {
+            "1Minute",
+            "10Minute",
+            "1Hour"});
+            this.cbxGroupByType.Location = new System.Drawing.Point(310, 55);
+            this.cbxGroupByType.Name = "cbxGroupByType";
+            this.cbxGroupByType.Size = new System.Drawing.Size(121, 20);
+            this.cbxGroupByType.TabIndex = 13;
+            // 
             // btnGroupByFileMinutes
             // 
             this.btnGroupByFileMinutes.Location = new System.Drawing.Point(500, 47);
@@ -70,6 +85,15 @@
             this.btnGroupByFileMinutes.Text = "Group By File And Minutes";
             this.btnGroupByFileMinutes.UseVisualStyleBackColor = true;
             this.btnGroupByFileMinutes.Click += new System.EventHandler(this.btnGroupByFileMinutes_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(244, 55);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Group By:";
             // 
             // label1
             // 
@@ -92,7 +116,7 @@
             this.numTimes.Size = new System.Drawing.Size(72, 21);
             this.numTimes.TabIndex = 9;
             this.numTimes.Value = new decimal(new int[] {
-            30,
+            1000,
             0,
             0,
             0});
@@ -117,6 +141,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkAvg);
+            this.groupBox2.Controls.Add(this.chkSum);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.txtURL);
             this.groupBox2.Controls.Add(this.label2);
@@ -153,27 +179,27 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "URL:";
             // 
-            // label3
+            // chkSum
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(244, 55);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Group By:";
+            this.chkSum.AutoSize = true;
+            this.chkSum.Location = new System.Drawing.Point(146, 66);
+            this.chkSum.Name = "chkSum";
+            this.chkSum.Size = new System.Drawing.Size(42, 16);
+            this.chkSum.TabIndex = 13;
+            this.chkSum.Text = "Sum";
+            this.chkSum.UseVisualStyleBackColor = true;
             // 
-            // cbxGroupByType
+            // chkAvg
             // 
-            this.cbxGroupByType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxGroupByType.FormattingEnabled = true;
-            this.cbxGroupByType.Items.AddRange(new object[] {
-            "1Minute",
-            "10Minute",
-            "1Hour"});
-            this.cbxGroupByType.Location = new System.Drawing.Point(310, 55);
-            this.cbxGroupByType.Name = "cbxGroupByType";
-            this.cbxGroupByType.Size = new System.Drawing.Size(121, 20);
-            this.cbxGroupByType.TabIndex = 13;
+            this.chkAvg.AutoSize = true;
+            this.chkAvg.Checked = true;
+            this.chkAvg.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAvg.Location = new System.Drawing.Point(246, 66);
+            this.chkAvg.Name = "chkAvg";
+            this.chkAvg.Size = new System.Drawing.Size(42, 16);
+            this.chkAvg.TabIndex = 14;
+            this.chkAvg.Text = "Avg";
+            this.chkAvg.UseVisualStyleBackColor = true;
             // 
             // FrmReport
             // 
@@ -207,5 +233,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox cbxGroupByType;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox chkAvg;
+        private System.Windows.Forms.CheckBox chkSum;
     }
 }

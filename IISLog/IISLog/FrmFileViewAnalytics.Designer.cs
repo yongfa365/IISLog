@@ -92,7 +92,7 @@
             this.numTimes.Size = new System.Drawing.Size(72, 21);
             this.numTimes.TabIndex = 4;
             this.numTimes.Value = new decimal(new int[] {
-            30,
+            1000,
             0,
             0,
             0});

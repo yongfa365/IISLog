@@ -220,10 +220,21 @@ namespace IISLog
 
             var sb = new StringBuilder();
 
-            result.ForEach(p =>
+            if (chkAvg.Checked)
             {
-                sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.ToString("yyyy,MM,dd,HH,mm"), p.TimeAvg);
-            });
+                result.ForEach(p =>
+                {
+                    sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.ToString("yyyy,MM,dd,HH,mm"), p.TimeAvg);
+                });
+            }
+            else
+            {
+                result.ForEach(p =>
+                {
+                    sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.ToString("yyyy,MM,dd,HH,mm"), p.TimeSum);
+                });
+            }
+  
             var strResult = File.ReadAllText("Template\\1.html").Replace("{Data}", sb.ToString().Substring(1));
             File.WriteAllText("Result.html", strResult);
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "输出HTML完成"));

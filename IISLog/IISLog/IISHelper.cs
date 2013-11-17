@@ -38,13 +38,16 @@ namespace IISLog
 
         public static string ToJson<T>(this T item)
         {
+             
             var serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = int.MaxValue;
             return serializer.Serialize(item);
         }
 
         public static T FromJson<T>(this string str)
         {
             var serializer = new JavaScriptSerializer();
+            serializer.MaxJsonLength = int.MaxValue;
             return serializer.Deserialize<T>(str);
 
         }
