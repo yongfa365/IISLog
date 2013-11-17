@@ -38,6 +38,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.txtURL = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.cbxGroupByType = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimes)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -45,7 +47,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cbxGroupByType);
             this.groupBox1.Controls.Add(this.btnGroupByFileMinutes);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.numTimes);
             this.groupBox1.Controls.Add(this.txtLogFolder);
@@ -70,7 +74,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 55);
+            this.label1.Location = new System.Drawing.Point(47, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 11;
@@ -78,7 +82,7 @@
             // 
             // numTimes
             // 
-            this.numTimes.Location = new System.Drawing.Point(125, 47);
+            this.numTimes.Location = new System.Drawing.Point(125, 53);
             this.numTimes.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -149,6 +153,28 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "URL:";
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(244, 55);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Group By:";
+            // 
+            // cbxGroupByType
+            // 
+            this.cbxGroupByType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxGroupByType.FormattingEnabled = true;
+            this.cbxGroupByType.Items.AddRange(new object[] {
+            "1Minute",
+            "10Minute",
+            "1Hour"});
+            this.cbxGroupByType.Location = new System.Drawing.Point(310, 55);
+            this.cbxGroupByType.Name = "cbxGroupByType";
+            this.cbxGroupByType.Size = new System.Drawing.Size(121, 20);
+            this.cbxGroupByType.TabIndex = 13;
+            // 
             // FrmReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -179,5 +205,7 @@
         private System.Windows.Forms.TextBox txtURL;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox cbxGroupByType;
+        private System.Windows.Forms.Label label3;
     }
 }

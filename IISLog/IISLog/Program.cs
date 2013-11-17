@@ -18,7 +18,7 @@ namespace IISLog
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Trace.Listeners.Add(new ConsoleTraceListener());
-           Application.Run(new FrmReport());
+           Application.Run(new Form1());
         }
     }
 }

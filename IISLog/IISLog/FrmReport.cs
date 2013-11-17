@@ -20,6 +20,7 @@ namespace IISLog
             InitializeComponent();
 
             txtLogFolder.Text = ConfigurationManager.AppSettings["Path"];
+
         }
         private static DataTable GenTable(Dictionary<string, LogEntity> dictItems)
         {
@@ -50,23 +51,37 @@ namespace IISLog
             var time2 = DateTime.Now;
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "开始处理"));
             var logFile = cbxLogFile.Text;
+            var datetimelength = 0;
+            switch (cbxGroupByType.Text)
+            {
+                case "1Minute":
+                    datetimelength = 16;
+                    break;
+                case "10Minute":
+                    datetimelength = 15;
+                    break;
+                case "1Hour":
+                    datetimelength = 13;
+                    break;
+            }
+
             if (logFile == "")
             {
                 Parallel.ForEach((cbxLogFile.DataSource as List<string>), p =>
                 {
-                    AnalyticsLogFile(p);
+                    AnalyticsLogFile(p, datetimelength);
                 });
             }
             else
             {
-                AnalyticsLogFile(logFile);
+                AnalyticsLogFile(logFile, datetimelength);
             }
 
             Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "处理完成", DateTime.Now - time2));
 
         }
 
-        private void AnalyticsLogFile(string logFile)
+        private void AnalyticsLogFile(string logFile, int datetimelength)
         {
             if (string.IsNullOrEmpty(logFile))
             {
@@ -78,6 +93,8 @@ namespace IISLog
             var dictFiles = new Dictionary<string, Dictionary<string, LogEntity>>(100, StringComparer.OrdinalIgnoreCase);
             var time2 = DateTime.Now;
             var index = new LogColumnIndex();
+
+
             using (var sr = new StreamReader(logFile))
             {
                 string line = null;
@@ -110,7 +127,7 @@ namespace IISLog
                                     continue;
                                 }
 
-                                var keyDateTime = line.Substring(0, 16);//cols[index.Date]+" "+cols[index.Time].Substring(0,5);
+                                var keyDateTime = line.Substring(0, datetimelength);//cols[index.Date]+" "+cols[index.Time].Substring(0,5);
 
                                 if (!dictFiles.ContainsKey(url))
                                 {
@@ -166,32 +183,50 @@ namespace IISLog
                     return;
                 }
                 var str = File.ReadAllText(p + ".json.txt");
-                var dict = str.FromJson<Dictionary<string, Dictionary<string, LogEntity>>>();
+                var dict2 = str.FromJson<Dictionary<string, Dictionary<string, LogEntity>>>();
+                var dict = new Dictionary<string, Dictionary<string, LogEntity>>(dict2, StringComparer.OrdinalIgnoreCase);
 
                 if (txtURL.Text != "")
                 {
-                    dict = new Dictionary<string, Dictionary<string, LogEntity>> { { txtURL.Text, dict[txtURL.Text] } };
+
+                    if (dict.ContainsKey(txtURL.Text))
+                    {
+                        dict = new Dictionary<string, Dictionary<string, LogEntity>> { { txtURL.Text, dict[txtURL.Text] } };
+                        list.Add(dict);
+                    }
+
                 }
-                list.Add(dict);
+                else
+                {
+                    list.Add(dict);
+                }
 
 
             });
 
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "收集完数据"));
-            var resultByM1 = list.Select(p => p.Select(x => x.Value.Select(y => new ReportEntity
+            var result = list.Select(p => p.Select(x => x.Value.Select(y => new ReportEntity
             {
                 URL = x.Key,
-                DateTime = DateTime.Parse(y.Key),
-                DateTimeStr=y.Key,
+                DateTime = DateTime.Parse(y.Key.PadRight(16, '0')).AddHours(8),
+                DateTimeStr = y.Key,
                 TimeSum = y.Value.TimeSum,
                 TimeAvg = y.Value.TimeAvg
             }))).SelectMany(p => p).SelectMany(p => p).OrderBy(p => p.URL).ThenBy(p => p.DateTime).ToList();
 
-           // var resultByM10=resultByM1.GroupBy(p=>p.URL+ p.DateTimeStr.Substring(15)).
-
-            Trace.WriteLine(string.Format("{0} {1} Count:{2}", DateTime.Now.TimeOfDay, "整理报表数据源完成", resultByM1.Count));
 
 
+            Trace.WriteLine(string.Format("{0} {1} Count:{2}", DateTime.Now.TimeOfDay, "整理报表数据源完成", result.Count));
+
+            var sb = new StringBuilder();
+
+            result.ForEach(p =>
+            {
+                sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.ToString("yyyy,MM,dd,HH,mm"), p.TimeAvg);
+            });
+            var strResult = File.ReadAllText("Template\\1.html").Replace("{Data}", sb.ToString().Substring(1));
+            File.WriteAllText("Result.html", strResult);
+            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "输出HTML完成"));
         }
     }
 }
