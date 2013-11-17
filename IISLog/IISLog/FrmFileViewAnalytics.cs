@@ -65,6 +65,10 @@ namespace IISLog
                             if (cols[statusIndex] == "0")
                             {
                                 var url = cols[urlIndex];
+                                //if (txtURL.Text != string.Empty && !string.Equals(txtURL.Text, url, StringComparison.OrdinalIgnoreCase))
+                                //{
+                                //    continue;
+                                //}
                                 var time = long.Parse(cols[timeIndex]);
                                 if (time < numericUpDown1.Value)
                                 {
