@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -16,7 +17,8 @@ namespace IISLog
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmFileViewAnalytics());
+            Trace.Listeners.Add(new ConsoleTraceListener());
+           Application.Run(new FrmReport());
         }
     }
 }

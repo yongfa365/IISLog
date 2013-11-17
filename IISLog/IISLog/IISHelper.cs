@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web.Script.Serialization;
 
 namespace IISLog
 {
-    class IISHelper
+   public static class IISHelper
     {
         public static Dictionary<string, int> ParseHeader(string line)
         {
@@ -34,6 +35,19 @@ namespace IISLog
             return line.StartsWith("#Fields:");
         }
 
+
+        public static string ToJson<T>(this T item)
+        {
+            var serializer = new JavaScriptSerializer();
+            return serializer.Serialize(item);
+        }
+
+        public static T FromJson<T>(this string str)
+        {
+            var serializer = new JavaScriptSerializer();
+            return serializer.Deserialize<T>(str);
+
+        }
     }
 
 }

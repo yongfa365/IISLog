@@ -20,9 +20,9 @@ namespace IISLog
         {
             InitializeComponent();
 
-            Trace.Listeners.Add(new ConsoleTraceListener());
-            textBox1.Text = ConfigurationManager.AppSettings["Path"];
-            textBox1.Focus();
+
+            txtLogFolder.Text = ConfigurationManager.AppSettings["Path"];
+
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace IISLog
 
             Dictionary<string, int> dictHeader = null;
             var dictItems = new Dictionary<string, LogEntity>(100, StringComparer.OrdinalIgnoreCase);
-            var logFile = comboBox1.Text;
+            var logFile = cbxLogFile.Text;
             if (!File.Exists(logFile))
             {
 
@@ -70,7 +70,7 @@ namespace IISLog
                                 //    continue;
                                 //}
                                 var time = long.Parse(cols[timeIndex]);
-                                if (time < numericUpDown1.Value)
+                                if (time < numTimes.Value)
                                 {
                                     continue;
                                 }
@@ -115,9 +115,9 @@ namespace IISLog
 
         private void textBox1_Leave(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(textBox1.Text))
+            if (!string.IsNullOrEmpty(txtLogFolder.Text))
             {
-                comboBox1.DataSource = Directory.GetFiles(textBox1.Text, "*.log", SearchOption.AllDirectories);
+                cbxLogFile.DataSource = Directory.GetFiles(txtLogFolder.Text, "*.log", SearchOption.AllDirectories);
             }
         }
 

@@ -30,14 +30,14 @@
         {
             this.btnRun = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.cbxLogFile = new System.Windows.Forms.ComboBox();
+            this.txtLogFolder = new System.Windows.Forms.TextBox();
+            this.numTimes = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtURL = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimes)).BeginInit();
             this.SuspendLayout();
             // 
             // btnRun
@@ -62,36 +62,36 @@
             this.dataGridView1.Size = new System.Drawing.Size(727, 450);
             this.dataGridView1.TabIndex = 1;
             // 
-            // comboBox1
+            // cbxLogFile
             // 
-            this.comboBox1.DropDownWidth = 400;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(210, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(448, 20);
-            this.comboBox1.TabIndex = 2;
-            this.comboBox1.Enter += new System.EventHandler(this.textBox1_Leave);
+            this.cbxLogFile.DropDownWidth = 400;
+            this.cbxLogFile.FormattingEnabled = true;
+            this.cbxLogFile.Location = new System.Drawing.Point(210, 12);
+            this.cbxLogFile.Name = "cbxLogFile";
+            this.cbxLogFile.Size = new System.Drawing.Size(448, 20);
+            this.cbxLogFile.TabIndex = 2;
+            this.cbxLogFile.Enter += new System.EventHandler(this.textBox1_Leave);
             // 
-            // textBox1
+            // txtLogFolder
             // 
-            this.textBox1.Location = new System.Drawing.Point(13, 13);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(176, 21);
-            this.textBox1.TabIndex = 3;
-            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.txtLogFolder.Location = new System.Drawing.Point(13, 13);
+            this.txtLogFolder.Name = "txtLogFolder";
+            this.txtLogFolder.Size = new System.Drawing.Size(176, 21);
+            this.txtLogFolder.TabIndex = 3;
+            this.txtLogFolder.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
-            // numericUpDown1
+            // numTimes
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(117, 40);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numTimes.Location = new System.Drawing.Point(117, 40);
+            this.numTimes.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(72, 21);
-            this.numericUpDown1.TabIndex = 4;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numTimes.Name = "numTimes";
+            this.numTimes.Size = new System.Drawing.Size(72, 21);
+            this.numTimes.TabIndex = 4;
+            this.numTimes.Value = new decimal(new int[] {
             30,
             0,
             0,
@@ -130,15 +130,15 @@
             this.Controls.Add(this.txtURL);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.numTimes);
+            this.Controls.Add(this.txtLogFolder);
+            this.Controls.Add(this.cbxLogFile);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnRun);
             this.Name = "FrmFileViewAnalytics";
             this.Text = "FrmFileViewAnalytics";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numTimes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,9 +148,9 @@
 
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ComboBox cbxLogFile;
+        private System.Windows.Forms.TextBox txtLogFolder;
+        private System.Windows.Forms.NumericUpDown numTimes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtURL;
