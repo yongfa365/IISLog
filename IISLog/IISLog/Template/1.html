@@ -1,11 +1,80 @@
-﻿<!DOCTYPE html>
+﻿
+<meta http-equiv='content-type' content='text/html; charset=UTF-8' />
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    {Data}
-</body>
-</html>
+<script src='http://code.jquery.com/jquery-1.9.1.min.js'></script>
+<script src='http://code.highcharts.com/highcharts.js'></script>
+<script src='http://code.highcharts.com/modules/exporting.js'></script>
+
+<div id='container' style='min-width: 400px; height: 2000px; margin: 0 auto'></div>
+
+<script>
+$(function () {
+        $('#container').highcharts({
+            chart: {
+                type: 'scatter',        //可选，默认为line【line:折线;spline:平滑的线;area:区域图;bar:曲线图;pie:饼图;scatter:点状图等等】;
+                marginRight: 130,       //外边距控制 (上下左右空隙)
+                marginBottom: 50        //外边距控制
+            },
+            title: {
+                text: '統計結果',    //主标题
+                x: -20                        //标题相对位置  默认居中
+            },
+            subtitle: {
+                text: 'by 柳永法',
+                x: -20
+            },
+
+            xAxis: {                  //x轴数据
+//                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+//                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                title: {
+                    enabled: true,
+                    text: '執行時間'
+                },
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                    month: '%e. %b',
+                    year: '%b'
+                }
+            },
+
+            yAxis: {                    //y轴数据
+                title: {
+                    text: '請求時間(秒)'
+                },
+                plotLines: [{           //标线
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+
+            tooltip: {                  //数据点的提示框
+                valueSuffix: '秒',
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>用時'+ this.y +' 秒';
+                }                   //formatter需要一个回调函数，可以通过this关键字打点得到当前一些图表信息
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'top',
+                x: -10,
+                y: 100,
+                borderWidth: 0
+            },
+
+            series: [{                  //数据数组,json格式中name为这组数据的名字，data为这组数据的数组
+			   color: 'rgba(0, 102, 204, .5)',   //顏色
+               name: '請求',
+                data: [
+                {Data}
+                ]
+            }]
+        });
+    });
+    
+
+</script>

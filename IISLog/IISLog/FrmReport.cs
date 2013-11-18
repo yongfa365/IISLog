@@ -220,18 +220,19 @@ namespace IISLog
 
             var sb = new StringBuilder();
 
+            //.AddMonths(-1)不然顯示有問題
             if (chkAvg.Checked)
             {
                 result.ForEach(p =>
                 {
-                    sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.ToString("yyyy,MM,dd,HH,mm"), p.TimeAvg);
+                    sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.AddMonths(-1).ToString("yyyy,MM,dd,HH,mm"), p.TimeAvg);
                 });
             }
             else
             {
                 result.ForEach(p =>
                 {
-                    sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.ToString("yyyy,MM,dd,HH,mm"), p.TimeSum);
+                    sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.AddMonths(-1).ToString("yyyy,MM,dd,HH,mm"), p.TimeSum);
                 });
             }
   
