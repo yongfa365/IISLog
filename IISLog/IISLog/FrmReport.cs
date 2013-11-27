@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Collections.Concurrent;
+using ServiceStack.Text;
 
 namespace IISLog
 {
@@ -67,7 +69,7 @@ namespace IISLog
 
             if (logFile == "")
             {
-                Parallel.ForEach((cbxLogFile.DataSource as List<string>), p =>
+                Parallel.ForEach((cbxLogFile.DataSource as List<string>), new ParallelOptions { MaxDegreeOfParallelism = IISHelper.MaxDegreeOfParallelism }, p =>
                 {
                     AnalyticsLogFile(p, datetimelength);
                 });
@@ -150,11 +152,17 @@ namespace IISLog
                 }
             }
             Trace.WriteLine(string.Format("{0} {1} {2} {3}", DateTime.Now.TimeOfDay, "处理完文件", logFile, DateTime.Now - time2));
+
             foreach (var item in dictFiles.Keys)
             {
                 foreach (var item2 in dictFiles[item].Values)
                 {
-                    item2.TimeAvg = Convert.ToInt32(item2.TimeSum / item2.Hits);
+                    var aaa = item2.TimeSum / item2.Hits;
+                    if (aaa>int.MaxValue)
+                    {
+                        aaa = int.MaxValue;
+                    }
+                    item2.TimeAvg = Convert.ToInt32(aaa);
                 }
             }
             File.WriteAllText(logFile + ".json.txt", dictFiles.ToJson());
@@ -175,14 +183,19 @@ namespace IISLog
                 listFile.Add(cbxLogFile.Text);
             }
 
-            var list = new List<Dictionary<string, Dictionary<string, LogEntity>>>();
-            listFile.ForEach(p =>
+            var list = new ConcurrentBag<Dictionary<string, Dictionary<string, LogEntity>>>();
+            Parallel.ForEach(listFile, new ParallelOptions { MaxDegreeOfParallelism = IISHelper.MaxDegreeOfParallelism }, p =>
+            // listFile.ForEach(p =>
             {
                 if (string.IsNullOrEmpty(p))
                 {
                     return;
                 }
+                var statTime = DateTime.Now;
+                Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "讀" + p));
                 var str = File.ReadAllText(p + ".json.txt");
+                Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "讀" + p + ".end"));
+
                 var dict2 = str.FromJson<Dictionary<string, Dictionary<string, LogEntity>>>();
                 var dict = new Dictionary<string, Dictionary<string, LogEntity>>(dict2, StringComparer.OrdinalIgnoreCase);
 
@@ -200,6 +213,7 @@ namespace IISLog
                 {
                     list.Add(dict);
                 }
+                Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "插入完成" + p + (DateTime.Now - statTime)));
 
 
             });
@@ -237,7 +251,7 @@ namespace IISLog
             }
   
             var strResult = File.ReadAllText("Template\\1.html").Replace("{Data}", sb.ToString().Substring(1));
-            File.WriteAllText("Result.html", strResult);
+            File.WriteAllText(string.Format("Result.{0}.{1}.html",DateTime.Now.Ticks,txtURL.Text.Replace("/",".")), strResult);
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "输出HTML完成"));
         }
     }

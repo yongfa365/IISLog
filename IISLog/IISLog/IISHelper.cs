@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Web.Script.Serialization;
+using System.Configuration;
 
 namespace IISLog
 {
-   public static class IISHelper
+    public static class IISHelper
     {
         public static Dictionary<string, int> ParseHeader(string line)
         {
@@ -35,21 +35,12 @@ namespace IISLog
             return line.StartsWith("#Fields:");
         }
 
-
-        public static string ToJson<T>(this T item)
+        public static int MaxDegreeOfParallelism
         {
-             
-            var serializer = new JavaScriptSerializer();
-            serializer.MaxJsonLength = int.MaxValue;
-            return serializer.Serialize(item);
-        }
-
-        public static T FromJson<T>(this string str)
-        {
-            var serializer = new JavaScriptSerializer();
-            serializer.MaxJsonLength = int.MaxValue;
-            return serializer.Deserialize<T>(str);
-
+            get
+            {
+                return int.Parse(ConfigurationManager.AppSettings["MaxDegreeOfParallelism"]);
+            }
         }
     }
 
