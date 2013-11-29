@@ -235,7 +235,7 @@ namespace IISLog
             var sb = new StringBuilder();
 
             //.AddMonths(-1)不然顯示有問題
-            if (chkAvg.Checked)
+            if (rdoAvg.Checked)
             {
                 result.ForEach(p =>
                 {

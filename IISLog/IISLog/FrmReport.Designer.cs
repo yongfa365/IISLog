@@ -40,8 +40,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.txtURL = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.chkSum = new System.Windows.Forms.CheckBox();
-            this.chkAvg = new System.Windows.Forms.CheckBox();
+            this.rdoSum = new System.Windows.Forms.RadioButton();
+            this.rdoAvg = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimes)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -116,7 +116,7 @@
             this.numTimes.Size = new System.Drawing.Size(72, 21);
             this.numTimes.TabIndex = 9;
             this.numTimes.Value = new decimal(new int[] {
-            1000,
+            20,
             0,
             0,
             0});
@@ -141,8 +141,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.chkAvg);
-            this.groupBox2.Controls.Add(this.chkSum);
+            this.groupBox2.Controls.Add(this.rdoAvg);
+            this.groupBox2.Controls.Add(this.rdoSum);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.txtURL);
             this.groupBox2.Controls.Add(this.label2);
@@ -179,27 +179,27 @@
             this.label2.TabIndex = 10;
             this.label2.Text = "URL:";
             // 
-            // chkSum
+            // rdoSum
             // 
-            this.chkSum.AutoSize = true;
-            this.chkSum.Location = new System.Drawing.Point(146, 66);
-            this.chkSum.Name = "chkSum";
-            this.chkSum.Size = new System.Drawing.Size(42, 16);
-            this.chkSum.TabIndex = 13;
-            this.chkSum.Text = "Sum";
-            this.chkSum.UseVisualStyleBackColor = true;
+            this.rdoSum.AutoSize = true;
+            this.rdoSum.Location = new System.Drawing.Point(125, 68);
+            this.rdoSum.Name = "rdoSum";
+            this.rdoSum.Size = new System.Drawing.Size(41, 16);
+            this.rdoSum.TabIndex = 13;
+            this.rdoSum.Text = "Sum";
+            this.rdoSum.UseVisualStyleBackColor = true;
             // 
-            // chkAvg
+            // rdoAvg
             // 
-            this.chkAvg.AutoSize = true;
-            this.chkAvg.Checked = true;
-            this.chkAvg.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAvg.Location = new System.Drawing.Point(246, 66);
-            this.chkAvg.Name = "chkAvg";
-            this.chkAvg.Size = new System.Drawing.Size(42, 16);
-            this.chkAvg.TabIndex = 14;
-            this.chkAvg.Text = "Avg";
-            this.chkAvg.UseVisualStyleBackColor = true;
+            this.rdoAvg.AutoSize = true;
+            this.rdoAvg.Checked = true;
+            this.rdoAvg.Location = new System.Drawing.Point(226, 68);
+            this.rdoAvg.Name = "rdoAvg";
+            this.rdoAvg.Size = new System.Drawing.Size(41, 16);
+            this.rdoAvg.TabIndex = 13;
+            this.rdoAvg.TabStop = true;
+            this.rdoAvg.Text = "Avg";
+            this.rdoAvg.UseVisualStyleBackColor = true;
             // 
             // FrmReport
             // 
@@ -233,7 +233,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox cbxGroupByType;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox chkAvg;
-        private System.Windows.Forms.CheckBox chkSum;
+        private System.Windows.Forms.RadioButton rdoAvg;
+        private System.Windows.Forms.RadioButton rdoSum;
     }
 }
