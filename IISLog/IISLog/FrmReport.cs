@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Concurrent;
-using ServiceStack.Text;
+
 
 namespace IISLog
 {
@@ -42,8 +42,16 @@ namespace IISLog
         {
             if (!string.IsNullOrEmpty(txtLogFolder.Text))
             {
+                if (!Directory.Exists(txtLogFolder.Text))
+                {
+                    return;
+                }
                 var lst = new List<string> { "" };
-                lst.AddRange(Directory.GetFiles(txtLogFolder.Text, "*.log", SearchOption.AllDirectories));
+                var fs = Directory.GetFiles(txtLogFolder.Text, "*.log", SearchOption.AllDirectories);
+                if (fs.Length > 0)
+                {
+                    lst.AddRange(fs);
+                }
                 cbxLogFile.DataSource = lst;
             }
         }
@@ -51,7 +59,7 @@ namespace IISLog
         private void btnGroupByFileMinutes_Click(object sender, EventArgs e)
         {
             var time2 = DateTime.Now;
-            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "开始处理"));
+            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "Root Start"));
             var logFile = cbxLogFile.Text;
             var datetimelength = 0;
             switch (cbxGroupByType.Text)
@@ -79,8 +87,8 @@ namespace IISLog
                 AnalyticsLogFile(logFile, datetimelength);
             }
 
-            Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "处理完成", DateTime.Now - time2));
-
+            Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "Root End", DateTime.Now - time2));
+            Trace.Flush();
         }
 
         private void AnalyticsLogFile(string logFile, int datetimelength)
@@ -89,7 +97,7 @@ namespace IISLog
             {
                 return;
             }
-            Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "开始处理", logFile));
+            Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "Start Analytics:", logFile));
 
             Dictionary<string, int> dictHeader = null;
             var dictFiles = new Dictionary<string, Dictionary<string, LogEntity>>(100, StringComparer.OrdinalIgnoreCase);
@@ -151,27 +159,30 @@ namespace IISLog
                     }
                 }
             }
-            Trace.WriteLine(string.Format("{0} {1} {2} {3}", DateTime.Now.TimeOfDay, "处理完文件", logFile, DateTime.Now - time2));
+            Trace.WriteLine(string.Format("{0} {1} {2} {3}", DateTime.Now.TimeOfDay, "End Analytics:", logFile, DateTime.Now - time2));
 
             foreach (var item in dictFiles.Keys)
             {
                 foreach (var item2 in dictFiles[item].Values)
                 {
                     var aaa = item2.TimeSum / item2.Hits;
-                    if (aaa>int.MaxValue)
+                    if (aaa > int.MaxValue)
                     {
                         aaa = int.MaxValue;
                     }
                     item2.TimeAvg = Convert.ToInt32(aaa);
                 }
             }
-            File.WriteAllText(logFile + ".json.txt", dictFiles.ToJson());
+
+            dictFiles.ToFile(logFile + IISHelper.SerializerFileExt);
+
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
 
-            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "开始整理报表数据源"));
+            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "Get Report Data Start"));
             var listFile = new List<string>();
             //取数据
             if (cbxLogFile.Text == "")
@@ -185,18 +196,15 @@ namespace IISLog
 
             var list = new ConcurrentBag<Dictionary<string, Dictionary<string, LogEntity>>>();
             Parallel.ForEach(listFile, new ParallelOptions { MaxDegreeOfParallelism = IISHelper.MaxDegreeOfParallelism }, p =>
-            // listFile.ForEach(p =>
             {
                 if (string.IsNullOrEmpty(p))
                 {
                     return;
                 }
                 var statTime = DateTime.Now;
-                Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "讀" + p));
-                var str = File.ReadAllText(p + ".json.txt");
-                Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "讀" + p + ".end"));
+                var fileName = p + IISHelper.SerializerFileExt;
+                var dict2 = fileName.FromFile<Dictionary<string, Dictionary<string, LogEntity>>>();
 
-                var dict2 = str.FromJson<Dictionary<string, Dictionary<string, LogEntity>>>();
                 var dict = new Dictionary<string, Dictionary<string, LogEntity>>(dict2, StringComparer.OrdinalIgnoreCase);
 
                 if (txtURL.Text != "")
@@ -213,12 +221,12 @@ namespace IISLog
                 {
                     list.Add(dict);
                 }
-                Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "插入完成" + p + (DateTime.Now - statTime)));
+                Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "Insert End" + p + (DateTime.Now - statTime)));
 
 
             });
 
-            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "收集完数据"));
+            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "Combine Data Start"));
             var result = list.Select(p => p.Select(x => x.Value.Select(y => new ReportEntity
             {
                 URL = x.Key,
@@ -230,7 +238,7 @@ namespace IISLog
 
 
 
-            Trace.WriteLine(string.Format("{0} {1} Count:{2}", DateTime.Now.TimeOfDay, "整理报表数据源完成", result.Count));
+            Trace.WriteLine(string.Format("{0} {1} Count:{2}", DateTime.Now.TimeOfDay, "Combine Data End", result.Count));
 
             var sb = new StringBuilder();
 
@@ -249,10 +257,10 @@ namespace IISLog
                     sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.AddMonths(-1).ToString("yyyy,MM,dd,HH,mm"), p.TimeSum);
                 });
             }
-  
+
             var strResult = File.ReadAllText("Template\\1.html").Replace("{Data}", sb.ToString().Substring(1));
-            File.WriteAllText(string.Format("Result.{0}.{1}.html",DateTime.Now.Ticks,txtURL.Text.Replace("/",".")), strResult);
-            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "输出HTML完成"));
+            File.WriteAllText(string.Format("Result.{0}.{1}.html", DateTime.Now.Ticks, txtURL.Text.Replace("/", ".")), strResult);
+            Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "To Html OK"));
         }
     }
 }

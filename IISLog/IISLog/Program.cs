@@ -18,7 +18,9 @@ namespace IISLog
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Trace.Listeners.Add(new ConsoleTraceListener());
-           Application.Run(new Form1());
+            var logFileName = string.Format("IISLog.{0}.txt", DateTime.Now.ToString("yyyy-MM-dd.HH.mm.ss"));
+            Trace.Listeners.Add(new TextWriterTraceListener(logFileName));
+            Application.Run(new Form1());
         }
     }
 }
