@@ -74,14 +74,14 @@
             this.cbxGroupByType.Location = new System.Drawing.Point(310, 55);
             this.cbxGroupByType.Name = "cbxGroupByType";
             this.cbxGroupByType.Size = new System.Drawing.Size(121, 20);
-            this.cbxGroupByType.TabIndex = 13;
+            this.cbxGroupByType.TabIndex = 3;
             // 
             // btnGroupByFileMinutes
             // 
             this.btnGroupByFileMinutes.Location = new System.Drawing.Point(500, 47);
             this.btnGroupByFileMinutes.Name = "btnGroupByFileMinutes";
             this.btnGroupByFileMinutes.Size = new System.Drawing.Size(166, 42);
-            this.btnGroupByFileMinutes.TabIndex = 12;
+            this.btnGroupByFileMinutes.TabIndex = 4;
             this.btnGroupByFileMinutes.Text = "Group By File And Minutes";
             this.btnGroupByFileMinutes.UseVisualStyleBackColor = true;
             this.btnGroupByFileMinutes.Click += new System.EventHandler(this.btnGroupByFileMinutes_Click);
@@ -114,7 +114,7 @@
             0});
             this.numTimes.Name = "numTimes";
             this.numTimes.Size = new System.Drawing.Size(72, 21);
-            this.numTimes.TabIndex = 9;
+            this.numTimes.TabIndex = 2;
             this.numTimes.Value = new decimal(new int[] {
             20,
             0,
@@ -128,7 +128,7 @@
             this.cbxLogFolder.Location = new System.Drawing.Point(15, 20);
             this.cbxLogFolder.Name = "cbxLogFolder";
             this.cbxLogFolder.Size = new System.Drawing.Size(197, 20);
-            this.cbxLogFolder.TabIndex = 7;
+            this.cbxLogFolder.TabIndex = 0;
             this.cbxLogFolder.Leave += new System.EventHandler(this.cbxLogFile_Enter);
             // 
             // cbxLogFile
@@ -138,7 +138,7 @@
             this.cbxLogFile.Location = new System.Drawing.Point(218, 19);
             this.cbxLogFile.Name = "cbxLogFile";
             this.cbxLogFile.Size = new System.Drawing.Size(448, 20);
-            this.cbxLogFile.TabIndex = 7;
+            this.cbxLogFile.TabIndex = 1;
             this.cbxLogFile.Enter += new System.EventHandler(this.cbxLogFile_Enter);
             // 
             // groupBox2
@@ -151,7 +151,7 @@
             this.groupBox2.Location = new System.Drawing.Point(21, 179);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(688, 105);
-            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "NO.2";
             // 
@@ -182,7 +182,7 @@
             this.button2.Location = new System.Drawing.Point(500, 23);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(166, 42);
-            this.button2.TabIndex = 12;
+            this.button2.TabIndex = 1;
             this.button2.Text = "Gen Report";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -203,7 +203,7 @@
             this.cbxURL.Location = new System.Drawing.Point(48, 20);
             this.cbxURL.Name = "cbxURL";
             this.cbxURL.Size = new System.Drawing.Size(415, 20);
-            this.cbxURL.TabIndex = 7;
+            this.cbxURL.TabIndex = 0;
             // 
             // FrmReport
             // 

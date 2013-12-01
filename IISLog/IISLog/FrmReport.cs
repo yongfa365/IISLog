@@ -22,13 +22,14 @@ namespace IISLog
         {
             InitializeComponent();
 
-            cbxLogFolder.Items.AddRange(IISHelper.AllLogPath);
-            cbxLogFolder.SelectedIndex = 0;
-            cbxLogFolder.Focus();
+
             cbxGroupByType.SelectedIndex = 1;
 
             cbxURL.Items.AddRange(IISHelper.AllReportUrl);
             cbxURL.SelectedIndex = 0;
+
+            cbxLogFolder.Items.AddRange(IISHelper.AllLogPath);
+            cbxLogFolder.SelectedIndex = 0;
 
         }
         private static DataTable GenTable(Dictionary<string, LogEntity> dictItems)
@@ -197,8 +198,15 @@ namespace IISLog
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (cbxLogFile.DataSource ==null)
+            {
+                MessageBox.Show("Folder do not exist Log File");
+                return;
+            }
 
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "Get Report Data Start"));
+
+
             var listFile = new List<string>();
             //取数据
             if (cbxLogFile.Text == "")
