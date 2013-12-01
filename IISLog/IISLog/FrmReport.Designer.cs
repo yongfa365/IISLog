@@ -34,14 +34,14 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.numTimes = new System.Windows.Forms.NumericUpDown();
-            this.txtLogFolder = new System.Windows.Forms.TextBox();
+            this.cbxLogFolder = new System.Windows.Forms.ComboBox();
             this.cbxLogFile = new System.Windows.Forms.ComboBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.txtURL = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.rdoSum = new System.Windows.Forms.RadioButton();
             this.rdoAvg = new System.Windows.Forms.RadioButton();
+            this.rdoSum = new System.Windows.Forms.RadioButton();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cbxURL = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numTimes)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -54,7 +54,7 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.numTimes);
-            this.groupBox1.Controls.Add(this.txtLogFolder);
+            this.groupBox1.Controls.Add(this.cbxLogFolder);
             this.groupBox1.Controls.Add(this.cbxLogFile);
             this.groupBox1.Location = new System.Drawing.Point(21, 26);
             this.groupBox1.Name = "groupBox1";
@@ -121,13 +121,15 @@
             0,
             0});
             // 
-            // txtLogFolder
+            // cbxLogFolder
             // 
-            this.txtLogFolder.Location = new System.Drawing.Point(21, 20);
-            this.txtLogFolder.Name = "txtLogFolder";
-            this.txtLogFolder.Size = new System.Drawing.Size(176, 21);
-            this.txtLogFolder.TabIndex = 8;
-            this.txtLogFolder.Enter += new System.EventHandler(this.cbxLogFile_Enter);
+            this.cbxLogFolder.DropDownWidth = 400;
+            this.cbxLogFolder.FormattingEnabled = true;
+            this.cbxLogFolder.Location = new System.Drawing.Point(15, 20);
+            this.cbxLogFolder.Name = "cbxLogFolder";
+            this.cbxLogFolder.Size = new System.Drawing.Size(197, 20);
+            this.cbxLogFolder.TabIndex = 7;
+            this.cbxLogFolder.Leave += new System.EventHandler(this.cbxLogFile_Enter);
             // 
             // cbxLogFile
             // 
@@ -144,50 +146,14 @@
             this.groupBox2.Controls.Add(this.rdoAvg);
             this.groupBox2.Controls.Add(this.rdoSum);
             this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.txtURL);
             this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.cbxURL);
             this.groupBox2.Location = new System.Drawing.Point(21, 179);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(688, 105);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "NO.2";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(500, 23);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(166, 42);
-            this.button2.TabIndex = 12;
-            this.button2.Text = "Gen Report";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // txtURL
-            // 
-            this.txtURL.Location = new System.Drawing.Point(49, 20);
-            this.txtURL.Name = "txtURL";
-            this.txtURL.Size = new System.Drawing.Size(414, 21);
-            this.txtURL.TabIndex = 12;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 23);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "URL:";
-            // 
-            // rdoSum
-            // 
-            this.rdoSum.AutoSize = true;
-            this.rdoSum.Location = new System.Drawing.Point(125, 68);
-            this.rdoSum.Name = "rdoSum";
-            this.rdoSum.Size = new System.Drawing.Size(41, 16);
-            this.rdoSum.TabIndex = 13;
-            this.rdoSum.Text = "Sum";
-            this.rdoSum.UseVisualStyleBackColor = true;
             // 
             // rdoAvg
             // 
@@ -201,11 +167,49 @@
             this.rdoAvg.Text = "Avg";
             this.rdoAvg.UseVisualStyleBackColor = true;
             // 
+            // rdoSum
+            // 
+            this.rdoSum.AutoSize = true;
+            this.rdoSum.Location = new System.Drawing.Point(125, 68);
+            this.rdoSum.Name = "rdoSum";
+            this.rdoSum.Size = new System.Drawing.Size(41, 16);
+            this.rdoSum.TabIndex = 13;
+            this.rdoSum.Text = "Sum";
+            this.rdoSum.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(500, 23);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(166, 42);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "Gen Report";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(13, 23);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "URL:";
+            // 
+            // cbxURL
+            // 
+            this.cbxURL.DropDownWidth = 400;
+            this.cbxURL.FormattingEnabled = true;
+            this.cbxURL.Location = new System.Drawing.Point(48, 20);
+            this.cbxURL.Name = "cbxURL";
+            this.cbxURL.Size = new System.Drawing.Size(415, 20);
+            this.cbxURL.TabIndex = 7;
+            // 
             // FrmReport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(742, 355);
+            this.ClientSize = new System.Drawing.Size(723, 293);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "FrmReport";
@@ -226,14 +230,14 @@
         private System.Windows.Forms.Button btnGroupByFileMinutes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numTimes;
-        private System.Windows.Forms.TextBox txtLogFolder;
         private System.Windows.Forms.ComboBox cbxLogFile;
-        private System.Windows.Forms.TextBox txtURL;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ComboBox cbxGroupByType;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.RadioButton rdoAvg;
         private System.Windows.Forms.RadioButton rdoSum;
+        private System.Windows.Forms.ComboBox cbxLogFolder;
+        private System.Windows.Forms.ComboBox cbxURL;
     }
 }

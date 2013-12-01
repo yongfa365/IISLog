@@ -24,7 +24,7 @@ namespace IISLog
 
         public static bool IsBody(string line)
         {
-            if (line.StartsWith("#") || line == "")
+            if (line == "" || line[0] == '#')
             {
                 return false;
             }
@@ -61,6 +61,24 @@ namespace IISLog
                 return ConfigurationManager.AppSettings["SerializerFileExt"];
             }
         }
+        public static string[] AllLogPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["AllLogPath"].Split('|');
+            }
+        }
+
+        public static string[] AllReportUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["AllReportUrl"].Split('|');
+            }
+        }
+
+
+
 
         public static void ToFile<T>(this T input, string path)
         {
@@ -123,6 +141,8 @@ namespace IISLog
             return result;
 
         }
+
+
     }
 
 }

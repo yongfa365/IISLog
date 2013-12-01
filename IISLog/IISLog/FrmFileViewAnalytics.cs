@@ -21,7 +21,7 @@ namespace IISLog
             InitializeComponent();
 
 
-            txtLogFolder.Text = ConfigurationManager.AppSettings["Path"];
+            txtLogFolder.Text = IISHelper.AllLogPath[0];
 
         }
 

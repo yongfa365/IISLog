@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
 
 
 namespace IISLog
@@ -21,7 +22,13 @@ namespace IISLog
         {
             InitializeComponent();
 
-            txtLogFolder.Text = ConfigurationManager.AppSettings["Path"];
+            cbxLogFolder.Items.AddRange(IISHelper.AllLogPath);
+            cbxLogFolder.SelectedIndex = 0;
+            cbxLogFolder.Focus();
+            cbxGroupByType.SelectedIndex = 1;
+
+            cbxURL.Items.AddRange(IISHelper.AllReportUrl);
+            cbxURL.SelectedIndex = 0;
 
         }
         private static DataTable GenTable(Dictionary<string, LogEntity> dictItems)
@@ -40,14 +47,14 @@ namespace IISLog
 
         private void cbxLogFile_Enter(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtLogFolder.Text))
+            if (!string.IsNullOrEmpty(cbxLogFolder.Text))
             {
-                if (!Directory.Exists(txtLogFolder.Text))
+                if (!Directory.Exists(cbxLogFolder.Text))
                 {
                     return;
                 }
                 var lst = new List<string> { "" };
-                var fs = Directory.GetFiles(txtLogFolder.Text, "*.log", SearchOption.AllDirectories);
+                var fs = Directory.GetFiles(cbxLogFolder.Text, "*.log", SearchOption.AllDirectories);
                 if (fs.Length > 0)
                 {
                     lst.AddRange(fs);
@@ -60,7 +67,7 @@ namespace IISLog
         {
             var time2 = DateTime.Now;
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "Root Start"));
-            var logFile = cbxLogFile.Text;
+
             var datetimelength = 0;
             switch (cbxGroupByType.Text)
             {
@@ -75,17 +82,25 @@ namespace IISLog
                     break;
             }
 
-            if (logFile == "")
+            var files = cbxLogFile.DataSource as List<string>;
+            if (files == null)
             {
-                Parallel.ForEach((cbxLogFile.DataSource as List<string>), new ParallelOptions { MaxDegreeOfParallelism = IISHelper.MaxDegreeOfParallelism }, p =>
+                MessageBox.Show("Folder do not exist Log File");
+                return;
+            }
+
+            if (cbxLogFile.Text != "")
+            {
+                AnalyticsLogFile(cbxLogFile.Text, datetimelength);
+            }
+            else
+            {
+                Parallel.ForEach(files, new ParallelOptions { MaxDegreeOfParallelism = IISHelper.MaxDegreeOfParallelism }, p =>
                 {
                     AnalyticsLogFile(p, datetimelength);
                 });
             }
-            else
-            {
-                AnalyticsLogFile(logFile, datetimelength);
-            }
+
 
             Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "Root End", DateTime.Now - time2));
             Trace.Flush();
@@ -126,6 +141,7 @@ namespace IISLog
                         if (IISHelper.IsBody(line))
                         {
                             cols = line.Split(' ');
+
 
 
                             if (cols[index.ScWin32Status] == "0")
@@ -194,6 +210,8 @@ namespace IISLog
                 listFile.Add(cbxLogFile.Text);
             }
 
+            var url = cbxURL.Text;
+
             var list = new ConcurrentBag<Dictionary<string, Dictionary<string, LogEntity>>>();
             Parallel.ForEach(listFile, new ParallelOptions { MaxDegreeOfParallelism = IISHelper.MaxDegreeOfParallelism }, p =>
             {
@@ -207,12 +225,12 @@ namespace IISLog
 
                 var dict = new Dictionary<string, Dictionary<string, LogEntity>>(dict2, StringComparer.OrdinalIgnoreCase);
 
-                if (txtURL.Text != "")
+                if (url != "")
                 {
 
-                    if (dict.ContainsKey(txtURL.Text))
+                    if (dict.ContainsKey(url))
                     {
-                        dict = new Dictionary<string, Dictionary<string, LogEntity>> { { txtURL.Text, dict[txtURL.Text] } };
+                        dict = new Dictionary<string, Dictionary<string, LogEntity>> { { url, dict[url] } };
                         list.Add(dict);
                     }
 
@@ -259,7 +277,7 @@ namespace IISLog
             }
 
             var strResult = File.ReadAllText("Template\\1.html").Replace("{Data}", sb.ToString().Substring(1));
-            File.WriteAllText(string.Format("Result.{0}.{1}.html", DateTime.Now.Ticks, txtURL.Text.Replace("/", ".")), strResult);
+            File.WriteAllText(string.Format("Result.{0}.{1}.html", DateTime.Now.Ticks, url.Replace("/", ".")), strResult);
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "To Html OK"));
         }
     }
