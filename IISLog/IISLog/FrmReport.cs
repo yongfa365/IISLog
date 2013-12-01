@@ -104,7 +104,7 @@ namespace IISLog
 
 
             Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "Root End", DateTime.Now - time2));
-            Trace.Flush();
+
         }
 
         private void AnalyticsLogFile(string logFile, int datetimelength)

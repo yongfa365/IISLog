@@ -118,8 +118,7 @@ namespace IISLog
             {
                 using (var fs = File.OpenRead(path))
                 {
-                    var serializer = MessagePackSerializer.Create<T>();
-                    result = serializer.Unpack(fs);//MessagePack serializer for the type 'System.Collections.Generic.Dictionary`2[System.String,IISLog.LogEntity]' is not constructed yet.
+                    result =  MessagePackSerializer.Create<T>().Unpack(fs);
                 }
             }
             else if (string.Equals(IISHelper.SerializerType, "ServiceStack.Text.Json"))
