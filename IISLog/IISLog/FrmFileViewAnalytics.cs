@@ -21,7 +21,9 @@ namespace IISLog
             InitializeComponent();
 
 
-            txtLogFolder.Text = ConfigurationManager.AppSettings["Path"];
+            cbxLogFolder.Items.AddRange(IISHelper.AllLogPath);
+            cbxLogFolder.SelectedIndex = 0;
+
 
         }
 
@@ -30,6 +32,7 @@ namespace IISLog
 
             Dictionary<string, int> dictHeader = null;
             var dictItems = new Dictionary<string, LogEntity>(100, StringComparer.OrdinalIgnoreCase);
+            var systemCode = cbxSystem.Text;
             var logFile = cbxLogFile.Text;
             if (!File.Exists(logFile))
             {
@@ -92,11 +95,12 @@ namespace IISLog
             Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "处理完文件", DateTime.Now - time2));
 
 
+            if (!string.IsNullOrEmpty(systemCode))
             {
-                dictItems = dictItems.GroupBy(p => GetGroupByStr(p.Key))
-                    .ToDictionary(p => p.Key, p => new LogEntity { URL = p.Key, Hits = p.Sum(x => x.Value.Hits), TimeSum = p.Sum(x => x.Value.TimeSum) });
-
+                dictItems = dictItems.GroupBy(p => GetGroupKey(p.Key, systemCode))
+                   .ToDictionary(p => p.Key, p => new LogEntity { URL = p.Key, Hits = p.Sum(x => x.Value.Hits), TimeSum = p.Sum(x => x.Value.TimeSum) });
             }
+
 
 
             var table = GenTable(dictItems);
@@ -121,15 +125,43 @@ namespace IISLog
             return table;
         }
 
-        private void textBox1_Leave(object sender, EventArgs e)
+
+        private void cbxLogFolder_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(txtLogFolder.Text))
+            if (!string.IsNullOrEmpty(cbxLogFolder.Text))
             {
-                cbxLogFile.DataSource = Directory.GetFiles(txtLogFolder.Text, "*.log", SearchOption.AllDirectories);
+                if (!Directory.Exists(cbxLogFolder.Text))
+                {
+                    return;
+                }
+                var lst = new List<string> { "" };
+                var fs = Directory.GetFiles(cbxLogFolder.Text, "*.log", SearchOption.AllDirectories);
+                if (fs.Length > 0)
+                {
+                    lst.AddRange(fs);
+                }
+                cbxLogFile.DataSource = lst;
             }
         }
-        private Regex re = new Regex("P");
-        private string GetGroupByStr(string input)
+
+        private string GetGroupKey(string input, string systemCode)
+        {
+            switch (systemCode)
+            {
+                case "Package":
+                    return GetGroupKeyForPackage(input);
+                //case "Hotel":
+                //    return GetGroupByStr(input);
+                //case "Ticket":
+                //    return GetGroupByStr(input);
+                //case "CRM":
+                //    return GetGroupByStr(input);
+                //default:
+                //    break;
+            }
+            return "";
+        }
+        private string GetGroupKeyForPackage(string input)
         {
             if (input.StartsWith("/Theme/", StringComparison.OrdinalIgnoreCase))
             {
@@ -193,6 +225,7 @@ namespace IISLog
                 return "未归类";
             }
         }
+
 
     }
 }

@@ -31,11 +31,11 @@
             this.btnRun = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.cbxLogFile = new System.Windows.Forms.ComboBox();
-            this.txtLogFolder = new System.Windows.Forms.TextBox();
             this.numTimes = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtURL = new System.Windows.Forms.TextBox();
+            this.cbxLogFolder = new System.Windows.Forms.ComboBox();
+            this.cbxSystem = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTimes)).BeginInit();
             this.SuspendLayout();
@@ -70,15 +70,7 @@
             this.cbxLogFile.Name = "cbxLogFile";
             this.cbxLogFile.Size = new System.Drawing.Size(448, 20);
             this.cbxLogFile.TabIndex = 2;
-            this.cbxLogFile.Enter += new System.EventHandler(this.textBox1_Leave);
-            // 
-            // txtLogFolder
-            // 
-            this.txtLogFolder.Location = new System.Drawing.Point(13, 13);
-            this.txtLogFolder.Name = "txtLogFolder";
-            this.txtLogFolder.Size = new System.Drawing.Size(176, 21);
-            this.txtLogFolder.TabIndex = 3;
-            this.txtLogFolder.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.cbxLogFile.Enter += new System.EventHandler(this.cbxLogFolder_SelectedIndexChanged);
             // 
             // numTimes
             // 
@@ -111,27 +103,44 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(208, 42);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 12);
+            this.label2.Size = new System.Drawing.Size(47, 12);
             this.label2.TabIndex = 5;
-            this.label2.Text = "URL:";
+            this.label2.Text = "System:";
             // 
-            // txtURL
+            // cbxLogFolder
             // 
-            this.txtURL.Location = new System.Drawing.Point(244, 39);
-            this.txtURL.Name = "txtURL";
-            this.txtURL.Size = new System.Drawing.Size(414, 21);
-            this.txtURL.TabIndex = 6;
+            this.cbxLogFolder.DropDownWidth = 400;
+            this.cbxLogFolder.FormattingEnabled = true;
+            this.cbxLogFolder.Location = new System.Drawing.Point(15, 11);
+            this.cbxLogFolder.Name = "cbxLogFolder";
+            this.cbxLogFolder.Size = new System.Drawing.Size(189, 20);
+            this.cbxLogFolder.TabIndex = 7;
+            this.cbxLogFolder.SelectedIndexChanged += new System.EventHandler(this.cbxLogFolder_SelectedIndexChanged);
+            // 
+            // cbxSystem
+            // 
+            this.cbxSystem.DropDownWidth = 400;
+            this.cbxSystem.FormattingEnabled = true;
+            this.cbxSystem.Items.AddRange(new object[] {
+            "Package",
+            "Hotel",
+            "Ticket",
+            "CRM"});
+            this.cbxSystem.Location = new System.Drawing.Point(271, 42);
+            this.cbxSystem.Name = "cbxSystem";
+            this.cbxSystem.Size = new System.Drawing.Size(189, 20);
+            this.cbxSystem.TabIndex = 7;
             // 
             // FrmFileViewAnalytics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(751, 540);
-            this.Controls.Add(this.txtURL);
+            this.Controls.Add(this.cbxSystem);
+            this.Controls.Add(this.cbxLogFolder);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numTimes);
-            this.Controls.Add(this.txtLogFolder);
             this.Controls.Add(this.cbxLogFile);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnRun);
@@ -149,10 +158,10 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ComboBox cbxLogFile;
-        private System.Windows.Forms.TextBox txtLogFolder;
         private System.Windows.Forms.NumericUpDown numTimes;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtURL;
+        private System.Windows.Forms.ComboBox cbxLogFolder;
+        private System.Windows.Forms.ComboBox cbxSystem;
     }
 }
