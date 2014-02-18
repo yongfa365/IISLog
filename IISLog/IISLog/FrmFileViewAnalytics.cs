@@ -91,6 +91,14 @@ namespace IISLog
             }
             Trace.WriteLine(string.Format("{0} {1} {2}", DateTime.Now.TimeOfDay, "处理完文件", DateTime.Now - time2));
 
+
+            {
+                dictItems = dictItems.GroupBy(p => GetGroupByStr(p.Key))
+                    .ToDictionary(p => p.Key, p => new LogEntity { URL = p.Key, Hits = p.Sum(x => x.Value.Hits), TimeSum = p.Sum(x => x.Value.TimeSum) });
+
+            }
+
+
             var table = GenTable(dictItems);
 
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "组装完Table"));
@@ -118,6 +126,71 @@ namespace IISLog
             if (!string.IsNullOrEmpty(txtLogFolder.Text))
             {
                 cbxLogFile.DataSource = Directory.GetFiles(txtLogFolder.Text, "*.log", SearchOption.AllDirectories);
+            }
+        }
+        private Regex re = new Regex("P");
+        private string GetGroupByStr(string input)
+        {
+            if (input.StartsWith("/Theme/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "访问Theme";
+            }
+            else if (input == "/")
+            {
+                return "访问首页";
+            }
+            else if (input.StartsWith("/Product/City/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "访问城市列表";
+            }
+            else if (input.StartsWith("/scripts/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "访问脚本文件";
+            }
+            else if (input.StartsWith("/Jsonp/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "访问Jsonp";
+            }
+            else if (input.StartsWith("/OP/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "访问OP";
+            }
+            else if (input.StartsWith("/PDF/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "访问PDF";
+            }
+            else if (input.StartsWith("/Detail/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "访问产品详情页";
+            }
+            else if (input.StartsWith("/Booking/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "预订流程";
+            }
+            else if (input.StartsWith("/Flight/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "预订流程.Flight";
+            }
+            else if (input.StartsWith("/Hotel/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "预订流程.Hotel";
+            }
+            else if (input.StartsWith("/Price/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "预订流程.Price";
+            }
+
+            else if (input.StartsWith("/City/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "City查询";
+            }
+            else if (input.StartsWith("/content/", StringComparison.OrdinalIgnoreCase))
+            {
+                return "Content查询";
+            }
+            else
+            {
+                return "未归类";
             }
         }
 

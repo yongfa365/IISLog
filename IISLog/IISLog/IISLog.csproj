@@ -103,6 +103,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Template\highcharts\.htaccess" />
+    <None Include="Template\highcharts\debug.php" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -112,6 +114,98 @@
     <Content Include="Template\1.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Template\highcharts\adapters\mootools-adapter.src.js" />
+    <Content Include="Template\highcharts\adapters\prototype-adapter.src.js" />
+    <Content Include="Template\highcharts\adapters\standalone-framework.src.js" />
+    <Content Include="Template\highcharts\highcharts-more.debug.js" />
+    <Content Include="Template\highcharts\highcharts-more.src.js" />
+    <Content Include="Template\highcharts\highcharts.debug.js" />
+    <Content Include="Template\highcharts\highcharts.src.js" />
+    <Content Include="Template\highcharts\highstock.debug.js" />
+    <Content Include="Template\highcharts\highstock.src.js" />
+    <Content Include="Template\highcharts\modules\annotations.src.js" />
+    <Content Include="Template\highcharts\modules\canvgrenderer-extended.src.js" />
+    <Content Include="Template\highcharts\modules\data.src.js" />
+    <Content Include="Template\highcharts\modules\drilldown.src.js" />
+    <Content Include="Template\highcharts\modules\exporting-old-look.src.js" />
+    <Content Include="Template\highcharts\modules\exporting.src.js" />
+    <Content Include="Template\highcharts\modules\filled-gauge.src.js" />
+    <Content Include="Template\highcharts\modules\funnel.src.js" />
+    <Content Include="Template\highcharts\modules\heatmap.src.js" />
+    <Content Include="Template\highcharts\modules\map-parser.src.js" />
+    <Content Include="Template\highcharts\modules\map.src.js" />
+    <Content Include="Template\highcharts\modules\no-data-to-display.src.js" />
+    <Content Include="Template\highcharts\parts-more\AreaRangeSeries.js" />
+    <Content Include="Template\highcharts\parts-more\AreaSplineRangeSeries.js" />
+    <Content Include="Template\highcharts\parts-more\BoxPlotSeries.js" />
+    <Content Include="Template\highcharts\parts-more\BubbleSeries.js" />
+    <Content Include="Template\highcharts\parts-more\ColumnRangeSeries.js" />
+    <Content Include="Template\highcharts\parts-more\ErrorBarSeries.js" />
+    <Content Include="Template\highcharts\parts-more\GaugeSeries.js" />
+    <Content Include="Template\highcharts\parts-more\Globals.js" />
+    <Content Include="Template\highcharts\parts-more\Intro.js" />
+    <Content Include="Template\highcharts\parts-more\Outro.js" />
+    <Content Include="Template\highcharts\parts-more\Pane.js" />
+    <Content Include="Template\highcharts\parts-more\Polar.js" />
+    <Content Include="Template\highcharts\parts-more\RadialAxis.js" />
+    <Content Include="Template\highcharts\parts-more\WaterfallSeries.js" />
+    <Content Include="Template\highcharts\parts.js" />
+    <Content Include="Template\highcharts\parts\Adapters.js" />
+    <Content Include="Template\highcharts\parts\AreaSeries.js" />
+    <Content Include="Template\highcharts\parts\AreaSplineSeries.js" />
+    <Content Include="Template\highcharts\parts\Axis.js" />
+    <Content Include="Template\highcharts\parts\BarSeries.js" />
+    <Content Include="Template\highcharts\parts\CandlestickSeries.js" />
+    <Content Include="Template\highcharts\parts\CanVGRenderer.js" />
+    <Content Include="Template\highcharts\parts\CenteredSeriesMixin.js" />
+    <Content Include="Template\highcharts\parts\Chart.js" />
+    <Content Include="Template\highcharts\parts\Color.js" />
+    <Content Include="Template\highcharts\parts\ColumnSeries.js" />
+    <Content Include="Template\highcharts\parts\DataGrouping.js" />
+    <Content Include="Template\highcharts\parts\DataLabels.js" />
+    <Content Include="Template\highcharts\parts\DateTimeAxis.js" />
+    <Content Include="Template\highcharts\parts\debug\ElementMonitor.js" />
+    <Content Include="Template\highcharts\parts\debug\EventMonitor.js" />
+    <Content Include="Template\highcharts\parts\Dynamics.js" />
+    <Content Include="Template\highcharts\parts\Facade.js" />
+    <Content Include="Template\highcharts\parts\FlagsSeries.js" />
+    <Content Include="Template\highcharts\parts\Globals.js" />
+    <Content Include="Template\highcharts\parts\Html.js" />
+    <Content Include="Template\highcharts\parts\Intro.js" />
+    <Content Include="Template\highcharts\parts\JQueryAdapter.js" />
+    <Content Include="Template\highcharts\parts\Legend.js" />
+    <Content Include="Template\highcharts\parts\LineSeries.js" />
+    <Content Include="Template\highcharts\parts\LogarithmicAxis.js" />
+    <Content Include="Template\highcharts\parts\MSPointer.js" />
+    <Content Include="Template\highcharts\parts\OHLCSeries.js" />
+    <Content Include="Template\highcharts\parts\Options.js" />
+    <Content Include="Template\highcharts\parts\OrdinalAxis.js" />
+    <Content Include="Template\highcharts\parts\Outro.js" />
+    <Content Include="Template\highcharts\parts\PathAnimation.js" />
+    <Content Include="Template\highcharts\parts\PieSeries.js" />
+    <Content Include="Template\highcharts\parts\PlotBandSeries.experimental.js" />
+    <Content Include="Template\highcharts\parts\PlotLineOrBand.js" />
+    <Content Include="Template\highcharts\parts\Point.js" />
+    <Content Include="Template\highcharts\parts\Pointer.js" />
+    <Content Include="Template\highcharts\parts\RangeSelector.js" />
+    <Content Include="Template\highcharts\parts\ScatterSeries.js" />
+    <Content Include="Template\highcharts\parts\Scroller.js" />
+    <Content Include="Template\highcharts\parts\Series.js" />
+    <Content Include="Template\highcharts\parts\SplineSeries.js" />
+    <Content Include="Template\highcharts\parts\StackItem.js" />
+    <Content Include="Template\highcharts\parts\StockChart.js" />
+    <Content Include="Template\highcharts\parts\StockNavigation.js" />
+    <Content Include="Template\highcharts\parts\SvgRenderer.js" />
+    <Content Include="Template\highcharts\parts\Tick.js" />
+    <Content Include="Template\highcharts\parts\Tooltip.js" />
+    <Content Include="Template\highcharts\parts\Utilities.js" />
+    <Content Include="Template\highcharts\parts\VmlRenderer.js" />
+    <Content Include="Template\highcharts\themes\dark-blue.js" />
+    <Content Include="Template\highcharts\themes\dark-green.js" />
+    <Content Include="Template\highcharts\themes\gray.js" />
+    <Content Include="Template\highcharts\themes\grid.js" />
+    <Content Include="Template\highcharts\themes\skies.js" />
+    <Content Include="Template\jquery-1.9.1.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
