@@ -21,7 +21,7 @@ $(function () {
                 marginBottom: 50        //外边距控制
             },
             title: {
-                text: '統計結果',    //主标题
+                text: 'Report Result',    //主标题
                 x: -20                        //标题相对位置  默认居中
             },
             subtitle: {
@@ -34,7 +34,7 @@ $(function () {
 //                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                 title: {
                     enabled: true,
-                    text: '執行時間'
+                    text: 'Run Time'
                 },
                 type: 'datetime',
                 dateTimeLabelFormats: { // don't display the dummy year
@@ -45,7 +45,7 @@ $(function () {
 
             yAxis: {                    //y轴数据
                 title: {
-                    text: '請求時間(秒)'
+                    text: 'Elapsed(ms)'
                 },
                 plotLines: [{           //标线
                     value: 0,
@@ -55,10 +55,10 @@ $(function () {
             },
 
             tooltip: {                  //数据点的提示框
-                valueSuffix: '秒',
+                valueSuffix: 'ms',
                 formatter: function() {
                         return '<b>'+ this.series.name +'</b><br/>'+
-                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>用時'+ this.y +' 秒';
+                        Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) +'<br/>Elapsed: '+ this.y +' ms';
                 }                   //formatter需要一个回调函数，可以通过this关键字打点得到当前一些图表信息
             },
 
@@ -73,7 +73,7 @@ $(function () {
 
             series: [{                  //数据数组,json格式中name为这组数据的名字，data为这组数据的数组
 			   color: 'rgba(0, 102, 204, .5)',   //顏色
-               name: '請求',
+               name: 'Details',
                 data: [
                 {Data}
                 ]
