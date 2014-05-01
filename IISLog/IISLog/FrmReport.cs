@@ -198,7 +198,7 @@ namespace IISLog
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (cbxLogFile.DataSource ==null)
+            if (cbxLogFile.DataSource == null)
             {
                 MessageBox.Show("Folder do not exist Log File");
                 return;
@@ -267,6 +267,7 @@ namespace IISLog
             Trace.WriteLine(string.Format("{0} {1} Count:{2}", DateTime.Now.TimeOfDay, "Combine Data End", result.Count));
 
             var sb = new StringBuilder();
+            var sb2 = new StringBuilder();
 
             //.AddMonths(-1)不然顯示有問題
             if (rdoAvg.Checked)
@@ -274,6 +275,7 @@ namespace IISLog
                 result.ForEach(p =>
                 {
                     sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.AddMonths(-1).ToString("yyyy,MM,dd,HH,mm"), p.TimeAvg);
+                    sb2.AppendFormat(",{{x:new Date({0}),y:{1}}}\r\n", p.DateTime.AddMonths(-1).ToString("yyyy,MM,dd,HH,mm"), p.TimeAvg);
                 });
             }
             else
@@ -281,11 +283,17 @@ namespace IISLog
                 result.ForEach(p =>
                 {
                     sb.AppendFormat(",[Date.UTC({0}),{1}]\r\n", p.DateTime.AddMonths(-1).ToString("yyyy,MM,dd,HH,mm"), p.TimeSum);
+                    sb2.AppendFormat(",{x:new Date({0}),y:{1}}\r\n", p.DateTime.AddMonths(-1).ToString("yyyy,MM,dd,HH,mm"), p.TimeSum);
                 });
             }
+            string strResult = string.Empty;
 
-            var strResult = File.ReadAllText("Template\\1.html").Replace("{Data}", sb.ToString().Substring(1));
-            File.WriteAllText(string.Format("Result.{0}.{1}.html", DateTime.Now.Ticks, url.Replace("/", ".")), strResult);
+            strResult = File.ReadAllText("Template\\highcharts.Demo.html").Replace("{Data}", sb.ToString().Substring(1));
+            File.WriteAllText(string.Format("Result.highcharts.{0}.{1}.html", DateTime.Now.Ticks, url.Replace("/", ".")), strResult);
+
+            strResult = File.ReadAllText("Template\\canvasjs.Demo.html").Replace("{Data}", sb2.ToString().Substring(1));
+            File.WriteAllText(string.Format("Result.canvasjs.{0}.{1}.html", DateTime.Now.Ticks, url.Replace("/", ".")), strResult);
+
             Trace.WriteLine(string.Format("{0} {1}", DateTime.Now.TimeOfDay, "To Html OK"));
         }
     }
