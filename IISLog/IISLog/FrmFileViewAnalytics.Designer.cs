@@ -36,6 +36,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cbxLogFolder = new System.Windows.Forms.ComboBox();
             this.cbxSystem = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numTimes)).BeginInit();
             this.SuspendLayout();
@@ -131,11 +132,22 @@
             this.cbxSystem.Size = new System.Drawing.Size(189, 20);
             this.cbxSystem.TabIndex = 7;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(545, 37);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FrmFileViewAnalytics
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(751, 540);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.cbxSystem);
             this.Controls.Add(this.cbxLogFolder);
             this.Controls.Add(this.label2);
@@ -163,5 +175,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbxLogFolder;
         private System.Windows.Forms.ComboBox cbxSystem;
+        private System.Windows.Forms.Button button1;
     }
 }
